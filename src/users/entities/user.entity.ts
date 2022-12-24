@@ -11,9 +11,12 @@ export class User {
   @Column()
   lastName: string;
 
-  @Column()
-  age: string;
+  @Column({ select: false })
+  password: string;
 
   @Column()
-  heigth: string;
+  age: number;
+
+  @Column({ nullable: true })
+  heigth: number;
 }
