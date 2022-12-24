@@ -1,44 +1,22 @@
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import {
-  TypeOrmModuleAsyncOptions,
-  TypeOrmModuleOptions,
-} from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
 
-export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
-  imports: [ConfigModule],
-  inject: [ConfigService],
-  useFactory: async (): Promise<TypeOrmModuleOptions> => {
-    return {
-      type: 'mysql',
-      host: process.env.DB_HOST,
-      port: parseInt(process.env.DB_PORT, 10),
-      username: process.env.DB_USERNAME,
-      database: process.env.DB_NAME,
-      password: process.env.DB_PASSWORD,
-      entities: [__dirname + '/../**/*.entity.{js,ts}'],
-      migrations: [__dirname + '/../database/migrations/*{.ts,.js}'],
-      extra: {
-        charset: 'utf8mb4_unicode_ci',
-      },
-      synchronize: false,
-
-      logging: true,
-    };
-  },
-};
-
-export const typeOrmConfig: TypeOrmModuleOptions = {
+export default new DataSource({
   type: 'mysql',
-  host: process.env.DB_HOST,
-  port: parseInt(process.env.DB_PORT, 10),
-  username: process.env.DB_USERNAME,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  entities: [__dirname + '/../**/*.entity.{js,ts}'],
-  migrations: [__dirname + '/../database/migrations/*{.ts,.js}'],
+  host: 'localhost',
+  database: 'nest-sql',
+  port: Number(process.env.MYSQL_DATABASE_PORT),
+  username: 'root',
+  password: '12346789aA',
+  logging: true,
+  logger: 'advanced-console',
+  synchronize: false,
+  entities: ['dist/**/*.entity{.ts,.js}'],
+  migrations: ['dist/database/migrations/*{.ts,.js}'],
+  migrationsTableName: 'migrations',
   extra: {
+    ssl: {
+      rejectUnauthorized: false,
+    },
     charset: 'utf8mb4_unicode_ci',
   },
-  synchronize: false,
-  logging: true,
-};
+});
