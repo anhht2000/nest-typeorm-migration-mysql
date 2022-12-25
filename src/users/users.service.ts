@@ -4,6 +4,7 @@ import { plainToClass } from 'class-transformer';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserDto } from './dto/user.dto';
 import { User } from './entities/user.entity';
 
 @Injectable()
@@ -14,15 +15,22 @@ export class UsersService {
   ) {}
 
   create(createUserDto: CreateUserDto) {
-    return this.userRepository.save(
+    const user = new User();
+    Object.assign(
+      user,
       plainToClass(CreateUserDto, createUserDto, {
         excludeExtraneousValues: true,
       }),
     );
+    return plainToClass(UserDto, this.userRepository.save(user), {
+      excludeExtraneousValues: true,
+    });
   }
 
-  findAll(): Promise<User[]> {
-    return this.userRepository.find();
+  findAll(): UserDto {
+    return plainToClass(UserDto, this.userRepository.find(), {
+      excludeExtraneousValues: true,
+    });
   }
 
   findOne(id: number) {

@@ -1,10 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, Column, BeforeInsert, BeforeUpdate } from 'typeorm';
+import * as bcrypt from 'bcrypt';
+import { CommonEntity } from '@common/entity.common';
 
 @Entity('users')
-export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: number;
-
+export class User extends CommonEntity {
   @Column()
   firstName: string;
 
@@ -19,4 +18,12 @@ export class User {
 
   @Column({ nullable: true })
   heigth: number;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  async setPassword(password: string) {
+    const salt = await bcrypt.genSalt();
+    const hash = await bcrypt.hash(password || this.password, salt);
+    this.password = hash;
+  }
 }
