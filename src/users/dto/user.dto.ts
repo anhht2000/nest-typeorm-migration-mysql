@@ -1,5 +1,5 @@
 import { Expose, Transform } from 'class-transformer';
-import { IsNotEmpty, IsInt, Min, Max } from 'class-validator';
+import { IsNotEmpty, IsInt, Min, Max, IsEmpty } from 'class-validator';
 import { CommonDto } from 'src/common/dto.common';
 
 export class UserDto extends CommonDto {
@@ -18,7 +18,5 @@ export class UserDto extends CommonDto {
   fullName: string;
 
   @Expose()
-  @IsNotEmpty({ message: 'Không được rỗng' })
-  @IsInt({ message: 'Phải là số' })
   heigth: number;
 }

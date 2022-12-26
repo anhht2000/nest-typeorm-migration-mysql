@@ -1,8 +1,7 @@
-import { Expose } from 'class-transformer';
-import { IsNotEmpty } from 'class-validator';
-import { UserDto } from './user.dto';
+import { Expose, Transform } from 'class-transformer';
+import { IsInt, IsNotEmpty, Min, Max } from 'class-validator';
 
-export class CreateUserDto extends UserDto {
+export class CreateUserDto {
   @Expose()
   @IsNotEmpty({ message: 'Không được rỗng' })
   password: string;
@@ -14,4 +13,14 @@ export class CreateUserDto extends UserDto {
   @Expose()
   @IsNotEmpty({ message: 'Không được rỗng' })
   lastName: string;
+
+  @Expose()
+  @IsNotEmpty({ message: 'Không được rỗng' })
+  @IsInt({ message: 'Phải là số' })
+  @Min(0, { message: 'Số phải lớn hơn 0' })
+  @Max(10, { message: 'Số phải nhỏ hơn 10' })
+  age: number;
+
+  @Expose()
+  heigth: number;
 }

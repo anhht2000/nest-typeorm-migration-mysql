@@ -33,12 +33,24 @@ export class UsersService {
     });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  findOne(id: string) {
+    return plainToClass(UserDto, this.userRepository.find({ where: { id } }), {
+      excludeExtraneousValues: true,
+    });
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+    const user = new User();
+
+    Object.assign(
+      user,
+      plainToClass(UpdateUserDto, updateUserDto, {
+        excludeExtraneousValues: true,
+      }),
+    );
+    return plainToClass(UserDto, this.userRepository.update(id, user), {
+      excludeExtraneousValues: true,
+    });
   }
 
   remove(id: number) {

@@ -1,15 +1,16 @@
-import { DataSource } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 
-export default new DataSource({
+export const typeOrmConfig: DataSourceOptions = {
   type: 'mysql',
   host: 'localhost',
   database: 'nest-sql',
-  port: Number(process.env.MYSQL_DATABASE_PORT),
-  username: 'root',
-  password: '12346789aA',
+  port: 9000,
+  username: 'develop',
+  password: 'password',
   logging: true,
   logger: 'advanced-console',
   synchronize: false,
+  timezone: 'Z',
   entities: ['dist/**/*.entity{.ts,.js}'],
   migrations: ['dist/database/migrations/*{.ts,.js}'],
   migrationsTableName: 'migrations',
@@ -19,4 +20,6 @@ export default new DataSource({
     },
     charset: 'utf8mb4_unicode_ci',
   },
-});
+};
+
+export default new DataSource(typeOrmConfig);

@@ -18,10 +18,17 @@ export class CommonEntity {
   @DeleteDateColumn({ name: 'deleted_at' })
   deleted_at?: Date;
 
-  //TODO
-  //   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
-  // public created_at: Date;
+  // TODO
+  // @CreateDateColumn({
+  //   type: 'timestamptz',
+  //   default: () => 'CURRENT_TIMESTAMP(6)',
+  // })
+  // created_at: Date;
 
-  // @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" })
-  // public updated_at: Date;
+  // @UpdateDateColumn({
+  //   type: 'timestamptz',
+  //   default: () => 'CURRENT_TIMESTAMP(6)',
+  //   onUpdate: 'CURRENT_TIMESTAMP(6)',
+  // })
+  // updated_at: Date;
 }
