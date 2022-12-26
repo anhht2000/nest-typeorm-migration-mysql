@@ -1,3 +1,3 @@
-Migration generate : npm run typeorm:generate-migration --name=CreateUser
+Migration generate : npm run migrations:generate --name=CreateUser
 #run
-Migration run : npm run typeorm:generate-migration --name=CreateUser
+Migration run : npm run migrations:run
