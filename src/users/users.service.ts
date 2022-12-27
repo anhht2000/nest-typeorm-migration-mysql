@@ -34,12 +34,16 @@ export class UsersService {
   }
 
   findOne(id: string) {
-    return plainToClass(UserDto, this.userRepository.find({ where: { id } }), {
-      excludeExtraneousValues: true,
-    });
+    return plainToClass(
+      UserDto,
+      this.userRepository.find({ where: { id }, withDeleted: true }),
+      {
+        excludeExtraneousValues: true,
+      },
+    );
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  update(id: string, updateUserDto: UpdateUserDto) {
     const user = new User();
 
     Object.assign(
@@ -48,12 +52,10 @@ export class UsersService {
         excludeExtraneousValues: true,
       }),
     );
-    return plainToClass(UserDto, this.userRepository.update(id, user), {
-      excludeExtraneousValues: true,
-    });
+    return this.userRepository.update(id, updateUserDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  remove(id: string) {
+    return this.userRepository.softDelete(id);
   }
 }
